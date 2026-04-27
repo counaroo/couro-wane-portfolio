@@ -4,837 +4,685 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C.WANE — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:        #F7F5F2;
-    --white:     #FFFFFF;
-    --black:     #111111;
-    --muted:     #888888;
-    --border:    #E2E0DC;
-    --accent:    #C0392B;
-    --accent2:   #E8D5C0;
-    --mono:      'IBM Plex Mono', monospace;
-    --sans:      'IBM Plex Sans', sans-serif;
-  }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'IBM Plex Sans',sans-serif;background:#F5F3F0;color:#1a1a1a;min-height:100vh;}
 
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(245,243,240,0.95);backdrop-filter:blur(8px);border-bottom:1px solid #E5E2DC;padding:0 2.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-size:0.88rem;font-weight:500;color:#1a1a1a;text-decoration:none;cursor:pointer;}
+.nav-main{display:flex;gap:2rem;}
+.nav-main a{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#888;text-decoration:none;transition:color .2s;cursor:pointer;}
+.nav-main a:hover{color:#1a1a1a;}
+.nav-back{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;color:#888;text-decoration:none;cursor:pointer;transition:color .2s;display:none;}
+.nav-back:hover{color:#1a1a1a;}
 
-  body {
-    font-family: var(--sans);
-    background: var(--bg);
-    color: var(--black);
-    min-height: 100vh;
-  }
+/* VIEWS */
+.view{display:none;}
+.view.active{display:block;}
 
-  /* ─── NAV ─── */
-  nav {
-    position: fixed; top:0; left:0; right:0; z-index:100;
-    padding: 1.2rem 2.5rem;
-    display: flex; align-items:center; justify-content:space-between;
-    background: rgba(247,245,242,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
+/* ── HOME ── */
+#view-home{padding-top:56px;}
+.home-hero{padding:5rem 2.5rem 3rem;}
+.home-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;}
+.home-name{font-size:clamp(3.5rem,9vw,7rem);font-weight:600;line-height:1.0;letter-spacing:-0.03em;margin-bottom:0.1em;}
+.home-name-accent{color:#C0392B;}
+.home-tagline{font-size:1rem;color:#666;font-weight:300;line-height:1.7;max-width:520px;margin:1.5rem 0 2.5rem;}
+.home-ctas{display:flex;gap:1.5rem;align-items:center;}
+.btn-border{padding:11px 24px;border:1.5px solid #1a1a1a;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#1a1a1a;background:transparent;cursor:pointer;transition:background .2s,color .2s;}
+.btn-border:hover{background:#1a1a1a;color:#F5F3F0;}
+.btn-text{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#888;background:transparent;border:none;cursor:pointer;transition:color .2s;}
+.btn-text:hover{color:#1a1a1a;}
 
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 0.9rem; font-weight:500;
-    letter-spacing: 0.04em; color: var(--black);
-    text-decoration: none;
-  }
+/* HOME PROJETS PREVIEW */
+.home-projects-section{padding:0 2.5rem 4rem;}
+.section-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:0.6rem;}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;letter-spacing:-0.02em;margin-bottom:2.5rem;}
 
-  .nav-links { display:flex; gap:2.5rem; }
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 0.75rem; letter-spacing:0.1em;
-    text-transform: uppercase; color: var(--muted);
-    text-decoration: none; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--black); }
+/* PROJECTS LIST */
+.projects-list{border-top:1px solid #DDD;}
+.project-row{display:flex;align-items:center;justify-content:space-between;padding:1.75rem 0;border-bottom:1px solid #DDD;cursor:pointer;transition:background .15s;text-decoration:none;color:inherit;}
+.project-row:hover{background:rgba(192,57,43,0.03);}
+.project-row:hover .project-row-title{color:#C0392B;}
+.project-row:hover .project-arrow{color:#C0392B;transform:translateX(4px);}
+.project-row-left{flex:1;}
+.project-row-head{display:flex;align-items:center;gap:12px;margin-bottom:0.4rem;flex-wrap:wrap;}
+.project-row-title{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;transition:color .2s;}
+.project-badge{padding:2px 8px;border:1px solid #C0392B;font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:#C0392B;}
+.project-row-desc{font-size:0.88rem;color:#666;font-weight:300;margin-bottom:0.5rem;max-width:650px;line-height:1.6;}
+.project-row-stack{display:flex;gap:12px;flex-wrap:wrap;}
+.project-row-stack span{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#aaa;}
+.project-arrow{font-size:1rem;color:#bbb;flex-shrink:0;margin-left:2rem;transition:transform .2s,color .2s;}
 
-  /* ─── PAGE VIEWS ─── */
-  .page { display:none; min-height:100vh; padding-top:60px; }
-  .page.active { display:block; }
+/* ── COMPÉTENCES ── */
+#view-competences{padding-top:56px;}
+.skills-wrap{max-width:960px;margin:0 auto;padding:4rem 2.5rem;}
+.skills-table{width:100%;border-collapse:collapse;}
+.skills-table tr{border-bottom:1px solid #DDD;}
+.skills-table tr:first-child{border-top:1px solid #DDD;}
+.skills-table td{padding:1.1rem 0;vertical-align:middle;}
+.skills-table td:first-child{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:#999;width:180px;padding-right:2rem;}
+.skills-table td:last-child{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.skill-pill{padding:5px 12px;border:1px solid #DDD;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#333;background:#fff;transition:all .2s;cursor:default;}
+.skill-pill:hover{border-color:#1a1a1a;background:#1a1a1a;color:#fff;}
 
-  /* ─── HERO ─── */
-  #page-home {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 2.5rem;
-    min-height: 100vh;
-  }
-  #page-home.active { display:flex; }
+/* ── PARCOURS ── */
+#view-parcours{padding-top:56px;}
+.parcours-wrap{max-width:960px;margin:0 auto;padding:4rem 2.5rem;}
+.parcours-block{margin-bottom:4rem;}
+.parcours-list{border-top:1px solid #DDD;}
+.parcours-item{display:grid;grid-template-columns:200px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid #DDD;}
+.parcours-date{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:#999;padding-top:2px;line-height:1.6;}
+.parcours-org{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#aaa;margin-top:4px;}
+.parcours-title{font-family:'IBM Plex Mono',monospace;font-size:0.95rem;font-weight:500;margin-bottom:0.6rem;}
+.parcours-desc{font-size:0.88rem;color:#666;line-height:1.75;font-weight:300;}
 
-  .hero-inner { max-width: 900px; }
+/* ── CONTACT ── */
+#view-contact{padding-top:56px;}
+.contact-wrap{max-width:960px;margin:0 auto;padding:4rem 2.5rem;}
+.contact-items{display:flex;flex-direction:column;gap:1.25rem;margin-top:1.5rem;}
+.contact-item{display:flex;align-items:center;gap:1rem;font-size:0.95rem;color:#444;text-decoration:none;transition:color .2s;}
+.contact-item:hover{color:#C0392B;}
+.contact-item svg{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.5;}
+.contact-footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid #DDD;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#bbb;letter-spacing:0.04em;}
 
-  .hero-label {
-    font-family: var(--mono);
-    font-size: 0.72rem; letter-spacing:0.12em;
-    text-transform:uppercase; color: var(--muted);
-    margin-bottom: 1.5rem;
-    display:flex; align-items:center; gap:12px;
-  }
-  .hero-label::before {
-    content:''; display:block;
-    width:30px; height:1px; background:var(--muted);
-  }
+/* ── PAGE PROJET DÉTAIL ── */
+#view-project{padding-top:56px;}
+.project-detail{max-width:960px;margin:0 auto;padding:3rem 2.5rem;}
+.project-back{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:#999;cursor:pointer;margin-bottom:2rem;transition:color .2s;border:none;background:none;}
+.project-back:hover{color:#1a1a1a;}
+.project-detail-title-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:0.5rem;}
+.project-detail-title{font-family:'IBM Plex Mono',monospace;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:500;}
+.project-detail-type{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:2rem;}
+.detail-divider{height:1px;background:#DDD;margin-bottom:2.5rem;}
 
-  .hero-name {
-    font-family: var(--sans);
-    font-size: clamp(3.5rem, 9vw, 7rem);
-    font-weight: 300; line-height:1.0;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.25rem;
-  }
+/* CAROUSEL */
+.carousel{position:relative;width:100%;background:#fff;border:1px solid #DDD;overflow:hidden;margin-bottom:1rem;}
+.carousel-track{display:flex;transition:transform .35s ease;}
+.carousel-slide{min-width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#EEE 0%,#F5F5F5 100%);position:relative;overflow:hidden;}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+.carousel-slide-placeholder{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.carousel-slide-placeholder svg{width:40px;height:40px;stroke:#CCC;fill:none;stroke-width:1;}
+.carousel-slide-placeholder span{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#CCC;letter-spacing:0.06em;}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:#fff;border:1px solid #DDD;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#666;transition:all .2s;z-index:10;}
+.carousel-btn:hover{background:#1a1a1a;color:#fff;border-color:#1a1a1a;}
+.carousel-btn-prev{left:12px;}
+.carousel-btn-next{right:12px;}
+.carousel-counter{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#aaa;position:absolute;top:12px;right:16px;}
+.carousel-dots{display:flex;justify-content:center;gap:8px;padding:0.75rem 0 1.5rem;}
+.cdot{width:8px;height:8px;border-radius:50%;background:#DDD;cursor:pointer;transition:background .2s;}
+.cdot.active{background:#C0392B;}
 
-  .hero-name strong { font-weight:600; }
+/* DETAIL BODY */
+.detail-body{display:grid;grid-template-columns:1fr 300px;gap:4rem;align-items:start;margin-top:1rem;}
+.detail-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:1rem;}
+.detail-about{font-size:0.95rem;color:#444;line-height:1.85;font-weight:300;margin-bottom:2.5rem;}
+.detail-features{list-style:none;display:flex;flex-direction:column;gap:0;}
+.detail-features li{display:flex;align-items:flex-start;gap:12px;padding:0.65rem 0;border-bottom:1px solid #EEE;font-size:0.88rem;color:#555;line-height:1.6;}
+.detail-features li:last-child{border-bottom:none;}
+.feat-dash{color:#C0392B;font-weight:600;flex-shrink:0;margin-top:1px;}
+.detail-stack-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;}
+.detail-stack-pill{padding:6px 14px;border:1px solid #DDD;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#333;background:#fff;}
+.detail-links{display:flex;flex-direction:column;gap:10px;}
+.detail-link{display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#666;text-decoration:none;transition:color .2s;}
+.detail-link:hover{color:#C0392B;}
+.detail-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.detail-retour{margin-top:3rem;padding-top:2rem;border-top:1px solid #DDD;}
+.detail-retour-btn{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:#999;cursor:pointer;border:none;background:none;transition:color .2s;display:flex;align-items:center;gap:6px;}
+.detail-retour-btn:hover{color:#1a1a1a;}
 
-  .hero-title {
-    font-size: 1rem; color: var(--muted);
-    font-weight:300; margin-bottom: 3rem;
-    font-style: italic;
-  }
+/* FOOTER */
+footer{border-top:1px solid #DDD;padding:1.5rem 2.5rem;font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:#bbb;letter-spacing:0.04em;display:flex;justify-content:space-between;}
 
-  .hero-desc {
-    max-width: 520px;
-    font-size: 1rem; color: #555;
-    line-height: 1.8; font-weight:300;
-    margin-bottom: 3rem;
-  }
-
-  .hero-actions { display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; }
-
-  .btn-dark {
-    padding: 12px 28px;
-    background: var(--black); color: var(--white);
-    font-family: var(--mono); font-size:0.78rem;
-    letter-spacing:0.06em; text-transform:uppercase;
-    text-decoration:none; border:none; cursor:pointer;
-    transition: background 0.2s;
-  }
-  .btn-dark:hover { background: #333; }
-
-  .btn-outline {
-    padding: 12px 28px;
-    background: transparent; color: var(--black);
-    font-family: var(--mono); font-size:0.78rem;
-    letter-spacing:0.06em; text-transform:uppercase;
-    text-decoration:none; border:1px solid var(--border);
-    cursor:pointer; transition: border-color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--black); }
-
-  .hero-scroll {
-    position:fixed; bottom:2rem; left:2.5rem;
-    font-family:var(--mono); font-size:0.68rem;
-    color:var(--muted); letter-spacing:0.08em;
-    display:flex; align-items:center; gap:10px;
-    text-transform:uppercase;
-  }
-  .hero-scroll::before {
-    content:''; display:block;
-    width:24px; height:1px; background:var(--muted);
-  }
-
-  /* ─── SECTION WRAPPER ─── */
-  .section-wrap { max-width:960px; margin:0 auto; padding:4rem 2.5rem; }
-
-  .section-eyebrow {
-    font-family:var(--mono); font-size:0.68rem;
-    letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--muted); margin-bottom:0.5rem;
-  }
-
-  .section-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight:300; letter-spacing:-0.02em;
-    margin-bottom:3rem;
-  }
-
-  /* ─── PROJETS LIST ─── */
-  .projects-list { border-top:1px solid var(--border); }
-
-  .project-row {
-    display:flex; align-items:flex-start;
-    justify-content:space-between;
-    padding:2rem 0;
-    border-bottom:1px solid var(--border);
-    cursor:pointer;
-    text-decoration:none; color:inherit;
-    transition: background 0.15s;
-    position:relative;
-  }
-  .project-row:hover .project-arrow { transform:translateX(4px); }
-  .project-row:hover .project-row-title { color: var(--accent); }
-
-  .project-row-left { flex:1; }
-
-  .project-row-head {
-    display:flex; align-items:center; gap:12px;
-    margin-bottom:0.5rem;
-  }
-
-  .project-row-title {
-    font-size:1.05rem; font-weight:600;
-    font-family:var(--mono); transition:color 0.2s;
-  }
-
-  .project-badge {
-    padding:3px 10px;
-    border:1px solid var(--accent);
-    font-family:var(--mono); font-size:0.65rem;
-    letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--accent);
-  }
-
-  .project-row-desc {
-    font-size:0.9rem; color:var(--muted);
-    font-weight:300; margin-bottom:0.6rem;
-    max-width:600px; line-height:1.6;
-  }
-
-  .project-row-stack {
-    display:flex; gap:10px; flex-wrap:wrap;
-  }
-  .project-row-stack span {
-    font-family:var(--mono); font-size:0.72rem;
-    color:#999;
-  }
-
-  .project-arrow {
-    font-size:1.1rem; color:var(--muted);
-    padding-top:4px; transition:transform 0.2s, color 0.2s;
-    flex-shrink:0; margin-left:2rem;
-  }
-  .project-row:hover .project-arrow { color:var(--accent); }
-
-  /* ─── COMPÉTENCES ─── */
-  .skills-table { width:100%; border-collapse:collapse; }
-  .skills-table tr { border-bottom:1px solid var(--border); }
-  .skills-table tr:first-child { border-top:1px solid var(--border); }
-  .skills-table td {
-    padding:1.1rem 0; vertical-align:top;
-  }
-  .skills-table td:first-child {
-    font-family:var(--mono); font-size:0.72rem;
-    letter-spacing:0.06em; text-transform:uppercase;
-    color:var(--muted); width:160px; padding-right:2rem;
-    padding-top:1.2rem;
-  }
-  .skills-table td:last-child {
-    display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-  }
-
-  .skill-pill {
-    padding:5px 12px;
-    border:1px solid var(--border);
-    font-family:var(--mono); font-size:0.75rem;
-    color:var(--black); background:var(--white);
-    transition:border-color 0.2s, background 0.2s;
-  }
-  .skill-pill:hover { border-color:var(--black); background:var(--black); color:var(--white); }
-
-  /* ─── PARCOURS ─── */
-  .parcours-list { display:flex; flex-direction:column; gap:0; }
-
-  .parcours-item {
-    display:grid; grid-template-columns:160px 1fr;
-    gap:2rem; padding:1.75rem 0;
-    border-bottom:1px solid var(--border);
-  }
-  .parcours-item:first-child { border-top:1px solid var(--border); }
-
-  .parcours-date {
-    font-family:var(--mono); font-size:0.75rem;
-    color:var(--muted); line-height:1.6; padding-top:2px;
-  }
-  .parcours-org {
-    font-family:var(--mono); font-size:0.72rem;
-    color:var(--accent); margin-top:3px;
-  }
-
-  .parcours-title {
-    font-size:1rem; font-weight:500;
-    margin-bottom:0.5rem;
-  }
-  .parcours-desc {
-    font-size:0.88rem; color:var(--muted);
-    line-height:1.75; font-weight:300;
-  }
-  .parcours-desc li {
-    list-style:none; padding-left:1.2em;
-    position:relative; margin-bottom:3px;
-  }
-  .parcours-desc li::before {
-    content:'→'; position:absolute; left:0;
-    font-size:0.7rem; color:var(--accent); top:2px;
-  }
-
-  /* ─── CONTACT ─── */
-  #page-contact.active { display:flex; align-items:center; justify-content:center; }
-
-  .contact-inner {
-    max-width:600px; text-align:center;
-    padding:4rem 2.5rem;
-  }
-  .contact-inner .section-title { margin-bottom:1rem; }
-  .contact-inner p {
-    color:var(--muted); font-size:0.95rem;
-    line-height:1.8; font-weight:300; margin-bottom:2.5rem;
-  }
-
-  .contact-list { display:flex; flex-direction:column; gap:1px; }
-  .contact-row {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:1.1rem 0;
-    border-bottom:1px solid var(--border);
-    text-decoration:none; color:var(--black);
-    transition:color 0.2s;
-  }
-  .contact-row:first-child { border-top:1px solid var(--border); }
-  .contact-row:hover { color:var(--accent); }
-  .contact-row span:first-child {
-    font-family:var(--mono); font-size:0.72rem;
-    letter-spacing:0.08em; text-transform:uppercase; color:var(--muted);
-  }
-  .contact-row span:last-child { font-size:0.9rem; }
-  .contact-row:hover span:last-child { color:var(--accent); }
-
-  /* ─── PAGE PROJET DÉTAIL ─── */
-  #page-project { display:none; padding-top:60px; }
-  #page-project.active { display:block; }
-
-  .project-detail-wrap { max-width:960px; margin:0 auto; padding:3rem 2.5rem; }
-
-  .project-detail-header { margin-bottom:2.5rem; }
-  .project-detail-title {
-    font-size:clamp(1.8rem,4vw,3rem);
-    font-weight:300; letter-spacing:-0.02em;
-    margin-bottom:0.5rem;
-  }
-  .project-detail-sub {
-    font-family:var(--mono); font-size:0.8rem;
-    color:var(--muted); letter-spacing:0.06em;
-  }
-
-  /* Carrousel simulé avec screenshot mockup */
-  .project-mockup {
-    width:100%; aspect-ratio:16/9;
-    background:linear-gradient(135deg, #E8E4F0 0%, #D4E8D4 100%);
-    border:1px solid var(--border);
-    display:flex; align-items:center; justify-content:center;
-    margin-bottom:1rem; position:relative; overflow:hidden;
-  }
-  .mockup-label {
-    font-family:var(--mono); font-size:0.75rem;
-    color:#999; letter-spacing:0.06em; text-transform:uppercase;
-  }
-
-  .carousel-dots {
-    display:flex; justify-content:center; gap:8px; margin-bottom:3rem;
-  }
-  .dot { width:8px; height:8px; border-radius:50%; background:var(--border); }
-  .dot.active { background:var(--accent); }
-
-  .project-detail-body {
-    display:grid; grid-template-columns:1fr 340px; gap:4rem;
-    align-items:start;
-  }
-
-  .detail-section-label {
-    font-family:var(--mono); font-size:0.68rem;
-    letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--muted); margin-bottom:1rem;
-  }
-  .detail-desc {
-    font-size:0.95rem; color:#444;
-    line-height:1.85; font-weight:300; margin-bottom:2rem;
-  }
-  .detail-features { list-style:none; }
-  .detail-features li {
-    padding:0.6rem 0; border-bottom:1px solid var(--border);
-    font-size:0.88rem; color:#555;
-    display:flex; align-items:flex-start; gap:10px;
-  }
-  .detail-features li::before { content:'—'; color:var(--accent); flex-shrink:0; }
-
-  .detail-stack-grid { display:flex; flex-wrap:wrap; gap:8px; }
-  .detail-stack-pill {
-    padding:6px 14px; border:1px solid var(--border);
-    font-family:var(--mono); font-size:0.75rem;
-    color:var(--black); background:var(--white);
-  }
-
-  /* ─── RETOUR NAV ─── */
-  .nav-back {
-    font-family:var(--mono); font-size:0.75rem;
-    letter-spacing:0.06em; color:var(--muted);
-    text-decoration:none; cursor:pointer;
-    transition:color 0.2s; display:flex; align-items:center; gap:6px;
-  }
-  .nav-back:hover { color:var(--black); }
-
-  /* ─── FOOTER ─── */
-  footer {
-    border-top:1px solid var(--border);
-    padding:1.5rem 2.5rem;
-    display:flex; justify-content:space-between; align-items:center;
-    font-family:var(--mono); font-size:0.68rem;
-    color:var(--muted); letter-spacing:0.04em;
-  }
-
-  @media(max-width:768px){
-    .nav-links { display:none; }
-    .project-detail-body { grid-template-columns:1fr; gap:2rem; }
-    .parcours-item { grid-template-columns:1fr; gap:0.25rem; }
-    .hero-scroll { display:none; }
-  }
+@media(max-width:768px){
+  .nav-main{display:none;}
+  .parcours-item{grid-template-columns:1fr;gap:0.25rem;}
+  .detail-body{grid-template-columns:1fr;gap:2rem;}
+  .home-name{font-size:3.5rem;}
+}
 </style>
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════
+     ✏️  ZONE DE CONFIGURATION — MODIFIE ICI UNIQUEMENT
+     ══════════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────
+// 👤 TES INFORMATIONS PERSONNELLES
+// ─────────────────────────────────────────────
+const ME = {
+  initiales: "C.WANE",
+  prenom: "Couro",
+  nom: "WANE",
+  titre: "Développeuse Full Stack. Étudiante en Master en Ingénierie des Systèmes d'Information à l'ESMT et future architecte logicielle.",
+  email: "adjacourowane@gmail.com",
+  telephone: "+221 77 262 43 91",
+  github: "github.com/yourprofile",
+  githubUrl: "https://github.com/yourprofile",
+  linkedin: "linkedin.com/in/yourprofile",
+  linkedinUrl: "https://linkedin.com/in/yourprofile",
+};
+
+// ─────────────────────────────────────────────
+// 📁 TES PROJETS
+// Pour ajouter un projet : copie un bloc { ... }
+// et colle-le à la suite en séparant par une virgule.
+// Pour les images : mets les URLs de tes screenshots dans "images: []"
+// Si pas d'image, laisse le tableau vide []
+// ─────────────────────────────────────────────
+const PROJETS = [
+  {
+    id: "smp",
+    titre: "Smart Mobility Pass",
+    badge: "Microservices",
+    type: "Full-Stack",
+    descCourte: "Plateforme de mobilité urbaine intelligente basée sur une architecture microservices.",
+    stack: ["Spring Boot","Spring Cloud","React","RabbitMQ","Zipkin","JWT","MySQL"],
+    apropos: "Smart Mobility Pass est une plateforme complète de gestion de la mobilité urbaine permettant aux citoyens d'utiliser un seul compte pour tous les transports (Bus, BRT, TER). Le projet repose sur une architecture microservices permettant une scalabilité et une maintenance optimales. Chaque service est indépendant et communique via des API REST, offrant une grande flexibilité dans le déploiement.",
+    fonctionnalites: [
+      "Gestion d'un Mobility Pass unique (création, recharge, suspension)",
+      "Enregistrement et historique des trajets par utilisateur",
+      "Calcul de tarification dynamique avec remises de fidélité",
+      "Notifications temps réel (débit, recharge, confirmation de trajet)",
+      "Authentification JWT avec gestion des rôles (USER / ADMIN)",
+      "Architecture 5 microservices Spring Boot indépendants",
+      "Résilience avec Circuit Breakers Resilience4J + fallbacks automatiques",
+      "Messagerie asynchrone RabbitMQ + Load balancing Eureka",
+      "Traçabilité distribuée Zipkin"
+    ],
+    github: "https://github.com/yourprofile",
+    images: []
+    // Pour ajouter des images : images: ["https://lien-vers-screenshot1.png","https://lien-vers-screenshot2.png"]
+  },
+  {
+    id: "research",
+    titre: "Plateforme de Gestion de Projets de Recherche",
+    badge: "",
+    type: "Full-Stack",
+    descCourte: "Application web multi-rôles pour la gestion et la cartographie de projets de recherche académiques.",
+    stack: ["Spring Boot","React","PostgreSQL","OAuth2 Google","JWT","Swagger"],
+    apropos: "Application web développée dans le cadre du Master ISI permettant aux centres de recherche de centraliser leurs projets académiques, gérer les équipes de chercheurs et analyser les données via des tableaux de bord statistiques.",
+    fonctionnalites: [
+      "Système multi-rôles : candidat, gestionnaire, administrateur",
+      "Authentification sécurisée JWT + OAuth2 Google",
+      "Tableaux de bord avec 7 indicateurs clés de performance",
+      "Import de données en masse via fichiers CSV",
+      "API REST documentée avec Swagger/OpenAPI",
+      "Gestion complète des participants et du suivi d'avancement"
+    ],
+    github: "https://github.com/yourprofile",
+    images: []
+  },
+  {
+    id: "lms",
+    titre: "Plateforme LMS",
+    badge: "",
+    type: "Full-Stack",
+    descCourte: "Plateforme d'apprentissage en ligne développée en stage chez DTAI pour la formation sur l'application de paie CEP.",
+    stack: ["Angular","Spring Boot","MySQL","REST API"],
+    apropos: "Plateforme LMS développée lors de mon stage chez DTAI pour former les utilisateurs de l'application de gestion de la paie CEP. Permet la création et la gestion de modules de formation avec suivi de progression des apprenants.",
+    fonctionnalites: [
+      "Gestion des cours et modules de formation",
+      "Suivi de progression des apprenants",
+      "Intégration de contenu d'apprentissage personnalisé",
+      "Interface utilisateur intuitive avec Angular"
+    ],
+    github: "https://github.com/yourprofile",
+    images: []
+  },
+  {
+    id: "contacts",
+    titre: "Gestion de Contacts",
+    badge: "",
+    type: "Full-Stack",
+    descCourte: "Application full stack de gestion des contacts clients avec API REST testée via Postman.",
+    stack: ["Angular","Laravel","PHP","MySQL","Postman"],
+    apropos: "Application full stack de gestion des contacts clients avec une API REST sécurisée. Interface Angular connectée à un backend Laravel, avec tests complets des endpoints via Postman.",
+    fonctionnalites: [
+      "CRUD complet sur les contacts clients",
+      "API REST sécurisée avec Laravel",
+      "Interface Angular réactive",
+      "Tests d'API avec Postman"
+    ],
+    github: "https://github.com/yourprofile",
+    images: []
+  },
+  {
+    id: "gym",
+    titre: "Gestion de Salle de Sport",
+    badge: "",
+    type: "Desktop · MVC",
+    descCourte: "Application desktop en architecture MVC pour la gestion des abonnements et des adhérents.",
+    stack: ["Java","JavaFX","MySQL","MVC"],
+    apropos: "Application desktop développée avec JavaFX en architecture MVC pour la gestion complète d'une salle de sport. Permet la gestion des abonnements, des adhérents et des paiements.",
+    fonctionnalites: [
+      "Gestion des abonnements et renouvellements",
+      "Gestion des adhérents et de leurs profils",
+      "Suivi des paiements",
+      "Interface graphique JavaFX",
+      "Architecture MVC rigoureuse"
+    ],
+    github: "https://github.com/yourprofile",
+    images: []
+  },
+  {
+    id: "bank",
+    titre: "Simulation Bancaire C++",
+    badge: "",
+    type: "POO · Console",
+    descCourte: "Application console simulant les opérations bancaires de base développée en C++.",
+    stack: ["C++","POO","Gestion mémoire"],
+    apropos: "Application console simulant les opérations bancaires de base. Projet axé sur la maîtrise de la programmation orientée objet en C++ avec une gestion rigoureuse de la mémoire et des structures de données.",
+    fonctionnalites: [
+      "Création et gestion de comptes bancaires",
+      "Opérations de dépôt et retrait",
+      "Transferts entre comptes",
+      "Gestion rigoureuse de la mémoire en C++"
+    ],
+    github: "https://github.com/yourprofile",
+    images: []
+  }
+];
+
+// ─────────────────────────────────────────────
+// 🎓 TON PARCOURS
+// ─────────────────────────────────────────────
+const EXPERIENCES = [
+  {
+    date: "Août — Nov. 2024",
+    org: "DTAI, Dakar",
+    titre: "Stage Développeuse Full Stack",
+    desc: "Développement d'une plateforme LMS avec Angular et Spring Boot pour former les utilisateurs de l'application de gestion de la paie CEP. Intégration de contenu d'apprentissage personnalisé."
+  },
+  {
+    date: "Sept. — Nov. 2023",
+    org: "Sénégal Numérique SA, Dakar",
+    titre: "Stage IT",
+    desc: "Helpdesk et assistance technique aux utilisateurs. Gestion des comptes de messagerie et VPN pour les structures publiques. Administration Active Directory sur les serveurs Exchange. Maintenance et diagnostic des serveurs."
+  }
+];
+
+const FORMATIONS = [
+  {
+    date: "2024 — Présent",
+    org: "ESMT, Dakar",
+    titre: "Master en Ingénierie des Systèmes d'Information"
+  },
+  {
+    date: "2021 — 2024",
+    org: "ESMT, Dakar",
+    titre: "Licence en Télécommunications et Informatique spécialisée en Développement d'Applications Réparties"
+  },
+  {
+    date: "2021",
+    org: "LTSNT, Dakar",
+    titre: "Baccalauréat Scientifique S2"
+  }
+];
+
+// ─────────────────────────────────────────────
+// 🛠️ TES COMPÉTENCES
+// ─────────────────────────────────────────────
+const COMPETENCES = [
+  { cat: "Langages",         items: ["Java","JavaScript (ES6+)","PHP","Python","C++","SQL","NoSQL"] },
+  { cat: "Back-end",         items: ["Spring Boot","Spring Cloud","Laravel","Node.js"] },
+  { cat: "Front-end",        items: ["React","Angular","Bootstrap","Tailwind CSS","Flutter","Figma"] },
+  { cat: "Architecture",     items: ["Microservices","REST API","OAuth2/JWT","API Gateway","MVC"] },
+  { cat: "Cloud & Outils",   items: ["AWS","Git","GitHub","Docker","RabbitMQ","Postman","Swagger"] },
+  { cat: "Bases de données", items: ["MySQL","PostgreSQL","MongoDB"] },
+  { cat: "Méthodes",         items: ["UML","BPMN","Agile/Scrum","UI/UX Design"] },
+];
+</script>
+
+<!-- ══════════════════════════════════════════════
+     HTML — NE PAS MODIFIER EN DESSOUS
+     ══════════════════════════════════════════════ -->
+
 <!-- NAV -->
-<nav id="main-nav">
-  <a class="nav-logo" href="#" onclick="showPage('home')">C.WANE</a>
-  <div class="nav-links" id="nav-main-links">
-    <a href="#" onclick="showPage('projets')">Projets</a>
-    <a href="#" onclick="showPage('competences')">Compétences</a>
-    <a href="#" onclick="showPage('parcours')">Parcours</a>
-    <a href="#" onclick="showPage('contact')">Contact</a>
+<nav>
+  <span class="nav-logo" id="nav-logo"></span>
+  <div class="nav-main" id="nav-main">
+    <a onclick="goTo('projets')">Projets</a>
+    <a onclick="goTo('competences')">Compétences</a>
+    <a onclick="goTo('parcours')">Parcours</a>
+    <a onclick="goTo('contact')">Contact</a>
   </div>
-  <a class="nav-back" id="nav-back-btn" style="display:none" onclick="goBack()">← Retour</a>
+  <span class="nav-back" id="nav-back" onclick="goBack()">← Retour</span>
 </nav>
 
-<!-- ═══ HOME ═══ -->
-<div class="page active" id="page-home">
-  <div class="hero-inner section-wrap" style="padding-top:6rem; padding-bottom:2rem;">
-    <div class="hero-label">Développeuse Full Stack · Dakar, Sénégal</div>
-    <div class="hero-name">Couro<br><strong>Wane</strong></div>
-    <div class="hero-title">Master ISI — ESMT · Disponible pour un stage</div>
-    <p class="hero-desc">
-      Passionnée par la conception de systèmes robustes et scalables. Je maîtrise Spring Boot, React, Angular et les architectures microservices.
-    </p>
-    <div class="hero-actions">
-      <button class="btn-dark" onclick="showPage('projets')">Voir mes projets →</button>
-      <button class="btn-outline" onclick="showPage('contact')">Me contacter</button>
+<!-- HOME -->
+<div class="view active" id="view-home">
+  <div class="home-hero">
+    <div class="home-eyebrow">Portfolio</div>
+    <div class="home-name">
+      <span id="hero-prenom"></span><br>
+      <span class="home-name-accent" id="hero-nom"></span>
+    </div>
+    <p class="home-tagline" id="hero-titre"></p>
+    <div class="home-ctas">
+      <button class="btn-border" onclick="goTo('projets')">Voir les projets</button>
+      <button class="btn-text" onclick="goTo('contact')">Contact</button>
     </div>
   </div>
-  <div class="hero-scroll">Scroll pour explorer</div>
-</div>
-
-<!-- ═══ PROJETS ═══ -->
-<div class="page" id="page-projets">
-  <div class="section-wrap">
+  <div class="home-projects-section">
     <div class="section-eyebrow">Travaux</div>
     <div class="section-title">Projets</div>
-    <div class="projects-list">
-
-      <a class="project-row" href="#" onclick="showProject('smp'); return false;">
-        <div class="project-row-left">
-          <div class="project-row-head">
-            <span class="project-row-title">Smart Mobility Pass</span>
-            <span class="project-badge">Microservices</span>
-          </div>
-          <p class="project-row-desc">Plateforme de mobilité urbaine intelligente basée sur une architecture microservices Spring Cloud.</p>
-          <div class="project-row-stack">
-            <span>Spring Boot</span><span>Spring Cloud</span><span>React</span><span>RabbitMQ</span><span>MySQL</span>
-          </div>
-        </div>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a class="project-row" href="#" onclick="showProject('research'); return false;">
-        <div class="project-row-left">
-          <div class="project-row-head">
-            <span class="project-row-title">Plateforme de Recherche</span>
-            <span class="project-badge">Full Stack</span>
-          </div>
-          <p class="project-row-desc">Application web multi-rôles pour la gestion et la cartographie de projets de recherche académiques.</p>
-          <div class="project-row-stack">
-            <span>Spring Boot</span><span>React</span><span>PostgreSQL</span><span>OAuth2</span><span>Swagger</span>
-          </div>
-        </div>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a class="project-row" href="#" onclick="showProject('lms'); return false;">
-        <div class="project-row-left">
-          <div class="project-row-head">
-            <span class="project-row-title">Plateforme LMS</span>
-          </div>
-          <p class="project-row-desc">Plateforme d'apprentissage en ligne développée en stage chez DTAI pour la formation des utilisateurs de l'application de paie CEP.</p>
-          <div class="project-row-stack">
-            <span>Angular</span><span>Spring Boot</span><span>MySQL</span>
-          </div>
-        </div>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a class="project-row" href="#" onclick="showProject('contacts'); return false;">
-        <div class="project-row-left">
-          <div class="project-row-head">
-            <span class="project-row-title">Gestion de Contacts</span>
-          </div>
-          <p class="project-row-desc">Application full stack de gestion des contacts clients avec API REST testée via Postman.</p>
-          <div class="project-row-stack">
-            <span>Angular</span><span>Laravel</span><span>MySQL</span><span>Postman</span>
-          </div>
-        </div>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a class="project-row" href="#" onclick="showProject('gym'); return false;">
-        <div class="project-row-left">
-          <div class="project-row-head">
-            <span class="project-row-title">Gestion de Salle de Sport</span>
-          </div>
-          <p class="project-row-desc">Application desktop en architecture MVC pour la gestion des abonnements et des adhérents.</p>
-          <div class="project-row-stack">
-            <span>Java</span><span>JavaFX</span><span>MySQL</span><span>MVC</span>
-          </div>
-        </div>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a class="project-row" href="#" onclick="showProject('bank'); return false;">
-        <div class="project-row-left">
-          <div class="project-row-head">
-            <span class="project-row-title">Simulation Bancaire C++</span>
-          </div>
-          <p class="project-row-desc">Application console simulant les opérations bancaires — création de comptes, dépôts, retraits et transferts.</p>
-          <div class="project-row-stack">
-            <span>C++</span><span>POO</span><span>Gestion mémoire</span>
-          </div>
-        </div>
-        <span class="project-arrow">→</span>
-      </a>
-
-    </div>
+    <div class="projects-list" id="home-projects-list"></div>
   </div>
 </div>
 
-<!-- ═══ COMPÉTENCES ═══ -->
-<div class="page" id="page-competences">
-  <div class="section-wrap">
+<!-- PROJETS -->
+<div class="view" id="view-projets">
+  <div style="max-width:960px;margin:0 auto;padding:4rem 2.5rem;">
+    <div class="section-eyebrow">Travaux</div>
+    <div class="section-title">Projets</div>
+    <div class="projects-list" id="projets-list"></div>
+  </div>
+</div>
+
+<!-- COMPÉTENCES -->
+<div class="view" id="view-competences">
+  <div class="skills-wrap">
     <div class="section-eyebrow">Stack technique</div>
     <div class="section-title">Compétences</div>
-    <table class="skills-table">
-      <tr>
-        <td>Langages</td>
-        <td><span class="skill-pill">Java</span><span class="skill-pill">JavaScript</span><span class="skill-pill">PHP</span><span class="skill-pill">Python</span><span class="skill-pill">C++</span><span class="skill-pill">SQL</span></td>
-      </tr>
-      <tr>
-        <td>Back-end</td>
-        <td><span class="skill-pill">Spring Boot</span><span class="skill-pill">Spring Cloud</span><span class="skill-pill">Laravel</span><span class="skill-pill">Node.js</span></td>
-      </tr>
-      <tr>
-        <td>Front-end</td>
-        <td><span class="skill-pill">React</span><span class="skill-pill">Angular</span><span class="skill-pill">Bootstrap</span><span class="skill-pill">Tailwind</span><span class="skill-pill">Flutter</span><span class="skill-pill">Figma</span></td>
-      </tr>
-      <tr>
-        <td>Architecture</td>
-        <td><span class="skill-pill">Microservices</span><span class="skill-pill">REST API</span><span class="skill-pill">OAuth2/JWT</span><span class="skill-pill">API Gateway</span><span class="skill-pill">MVC</span></td>
-      </tr>
-      <tr>
-        <td>Cloud & Outils</td>
-        <td><span class="skill-pill">AWS</span><span class="skill-pill">Git</span><span class="skill-pill">Docker</span><span class="skill-pill">RabbitMQ</span><span class="skill-pill">Zipkin</span><span class="skill-pill">Postman</span><span class="skill-pill">Swagger</span></td>
-      </tr>
-      <tr>
-        <td>Bases de données</td>
-        <td><span class="skill-pill">MySQL</span><span class="skill-pill">PostgreSQL</span><span class="skill-pill">MongoDB</span></td>
-      </tr>
-      <tr>
-        <td>Méthodes</td>
-        <td><span class="skill-pill">UML</span><span class="skill-pill">BPMN</span><span class="skill-pill">Agile/Scrum</span><span class="skill-pill">UI/UX</span></td>
-      </tr>
-    </table>
+    <table class="skills-table" id="skills-table"></table>
   </div>
 </div>
 
-<!-- ═══ PARCOURS ═══ -->
-<div class="page" id="page-parcours">
-  <div class="section-wrap">
-    <div class="section-eyebrow">Expériences & Formation</div>
-    <div class="section-title">Parcours</div>
-    <div class="parcours-list">
-
-      <div class="parcours-item">
-        <div>
-          <div class="parcours-date">Août — Nov. 2024</div>
-          <div class="parcours-org">DTAI · Dakar</div>
-        </div>
-        <div>
-          <div class="parcours-title">Stage Développeuse Full Stack</div>
-          <ul class="parcours-desc">
-            <li>Développement d'une plateforme LMS avec Angular et Spring Boot pour la formation des utilisateurs de l'application de paie CEP.</li>
-            <li>Intégration de contenu d'apprentissage personnalisé.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="parcours-item">
-        <div>
-          <div class="parcours-date">Sept. — Nov. 2023</div>
-          <div class="parcours-org">Sénégal Numérique SA</div>
-        </div>
-        <div>
-          <div class="parcours-title">Stage IT</div>
-          <ul class="parcours-desc">
-            <li>Helpdesk et assistance technique aux utilisateurs.</li>
-            <li>Gestion des comptes messagerie et VPN pour les structures publiques.</li>
-            <li>Administration Active Directory sur les serveurs Exchange.</li>
-            <li>Maintenance et diagnostic des serveurs.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="parcours-item">
-        <div>
-          <div class="parcours-date">2024 — 2026</div>
-          <div class="parcours-org">ESMT · Dakar</div>
-        </div>
-        <div>
-          <div class="parcours-title">Master Ingénierie des Systèmes d'Information</div>
-          <ul class="parcours-desc">
-            <li>En cours — spécialisation en architectures distribuées et cloud.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="parcours-item">
-        <div>
-          <div class="parcours-date">2021 — 2024</div>
-          <div class="parcours-org">ESMT · Dakar</div>
-        </div>
-        <div>
-          <div class="parcours-title">Licence Professionnelle — Développement d'Applications Réparties</div>
-          <ul class="parcours-desc">
-            <li>Spécialité DAR — Télécommunication et Informatique.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="parcours-item">
-        <div>
-          <div class="parcours-date">En cours</div>
-          <div class="parcours-org">Boutique · Dakar</div>
-        </div>
-        <div>
-          <div class="parcours-title">Fondatrice & Gérante — Cosmétiques</div>
-          <ul class="parcours-desc">
-            <li>Gestion complète de l'activité : approvisionnement, vente et relation client.</li>
-            <li>Marketing digital et gestion des réseaux sociaux.</li>
-          </ul>
-        </div>
-      </div>
-
+<!-- PARCOURS -->
+<div class="view" id="view-parcours">
+  <div class="parcours-wrap">
+    <div class="parcours-block">
+      <div class="section-eyebrow">Expériences</div>
+      <div class="section-title">Expériences professionnelles</div>
+      <div class="parcours-list" id="exp-list"></div>
+    </div>
+    <div class="parcours-block">
+      <div class="section-eyebrow">Formation</div>
+      <div class="section-title">Parcours académique</div>
+      <div class="parcours-list" id="formation-list"></div>
     </div>
   </div>
 </div>
 
-<!-- ═══ CONTACT ═══ -->
-<div class="page" id="page-contact" style="display:none; align-items:center; justify-content:center; min-height:100vh;">
-  <div class="contact-inner">
-    <div class="section-eyebrow" style="justify-content:center; display:flex; margin-bottom:0.5rem;">Contact</div>
-    <div class="section-title">Travaillons ensemble</div>
-    <p>Je recherche un stage en développement Full Stack ou Backend à Dakar. N'hésitez pas à me contacter !</p>
-    <div class="contact-list">
-      <a class="contact-row" href="mailto:adjacourowane@gmail.com">
-        <span>Email</span>
-        <span>adjacourowane@gmail.com →</span>
-      </a>
-      <a class="contact-row" href="tel:+221772624391">
-        <span>Téléphone</span>
-        <span>+221 77 262 43 91 →</span>
-      </a>
-      <a class="contact-row" href="https://github.com/yourprofile" target="_blank">
-        <span>GitHub</span>
-        <span>github.com/yourprofile →</span>
-      </a>
-    </div>
+<!-- CONTACT -->
+<div class="view" id="view-contact">
+  <div class="contact-wrap">
+    <div class="section-eyebrow">Me contacter</div>
+    <div class="section-title">Contact</div>
+    <div class="contact-items" id="contact-items"></div>
+    <div class="contact-footer" id="contact-footer"></div>
   </div>
 </div>
 
-<!-- ═══ PROJET DÉTAIL ═══ -->
-<div class="page" id="page-project">
-  <div class="project-detail-wrap">
-    <div class="project-detail-header">
-      <div class="section-eyebrow" id="detail-eyebrow">Master ISI</div>
-      <div class="project-detail-title" id="detail-title">Smart Mobility Pass</div>
-      <div class="project-detail-sub" id="detail-sub">Plateforme de mobilité urbaine</div>
+<!-- PROJET DÉTAIL -->
+<div class="view" id="view-project">
+  <div class="project-detail">
+    <button class="project-back" onclick="goTo('projets')">← Tous les projets</button>
+    <div class="project-detail-title-row">
+      <span class="project-detail-title" id="det-titre"></span>
+      <span class="project-badge" id="det-badge" style="display:none"></span>
     </div>
+    <div class="project-detail-type" id="det-type"></div>
+    <div class="detail-divider"></div>
 
-    <div class="project-mockup">
-      <span class="mockup-label" id="detail-mockup-label">Aperçu du projet</span>
+    <!-- Carrousel -->
+    <div class="carousel" id="det-carousel">
+      <div class="carousel-track" id="carousel-track"></div>
+      <button class="carousel-btn carousel-btn-prev" onclick="carouselPrev()">&#8592;</button>
+      <button class="carousel-btn carousel-btn-next" onclick="carouselNext()">&#8594;</button>
+      <div class="carousel-counter" id="carousel-counter"></div>
     </div>
-    <div class="carousel-dots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
+    <div class="carousel-dots" id="carousel-dots"></div>
 
-    <div class="project-detail-body">
+    <div class="detail-body">
       <div>
-        <div class="detail-section-label">À propos</div>
-        <p class="detail-desc" id="detail-desc"></p>
-        <div class="detail-section-label">Fonctionnalités</div>
-        <ul class="detail-features" id="detail-features"></ul>
+        <div class="detail-label">À propos</div>
+        <p class="detail-about" id="det-apropos"></p>
+        <div class="detail-label">Fonctionnalités</div>
+        <ul class="detail-features" id="det-features"></ul>
       </div>
       <div>
-        <div class="detail-section-label">Stack technique</div>
-        <div class="detail-stack-grid" id="detail-stack"></div>
+        <div class="detail-label">Stack technique</div>
+        <div class="detail-stack-grid" id="det-stack"></div>
+        <div class="detail-label" style="margin-top:1.5rem">Liens</div>
+        <div class="detail-links" id="det-links"></div>
       </div>
+    </div>
+    <div class="detail-retour">
+      <button class="detail-retour-btn" onclick="goTo('projets')">← Retour aux projets</button>
     </div>
   </div>
 </div>
 
 <footer>
-  <span>© 2025 Couro Wane</span>
+  <span id="footer-copy"></span>
   <span>Dakar, Sénégal</span>
 </footer>
 
 <script>
-  const projects = {
-    smp: {
-      eyebrow: 'Master ISI · Microservices',
-      title: 'Smart Mobility Pass',
-      sub: 'Plateforme de mobilité urbaine intelligente',
-      desc: "Plateforme complète de gestion de la mobilité urbaine permettant aux citoyens d'utiliser un seul compte pour tous les transports (Bus, BRT, TER) avec tarification dynamique, réductions intelligentes et suivi de consommation en temps réel. L'architecture microservices garantit une scalabilité et une résilience optimales.",
-      features: [
-        "Architecture 5 microservices indépendants : User, Trip, Pricing, Billing, Notification",
-        "Spring Cloud Config Server, Eureka Service Registry, API Gateway",
-        "Résilience avec Resilience4J et circuit breaker pattern",
-        "Traçabilité distribuée avec Zipkin et messagerie asynchrone RabbitMQ",
-        "Authentification sécurisée JWT/OAuth2",
-        "Load balancing automatique entre instances"
-      ],
-      stack: ['Spring Boot','Spring Cloud','Eureka','API Gateway','Resilience4J','Zipkin','RabbitMQ','JWT','React','MySQL']
-    },
-    research: {
-      eyebrow: 'Master ISI · Full Stack',
-      title: 'Plateforme Gestion de Projets de Recherche',
-      sub: 'Application web multi-rôles',
-      desc: "Application web développée dans le cadre du Master ISI permettant aux centres de recherche de centraliser leurs projets académiques, gérer les équipes de chercheurs et analyser les données via des tableaux de bord statistiques.",
-      features: [
-        "Système multi-rôles : candidat, gestionnaire, administrateur",
-        "Authentification sécurisée JWT + OAuth2 Google",
-        "Tableaux de bord avec 7 indicateurs clés de performance",
-        "Import de données en masse via fichiers CSV",
-        "API REST documentée avec Swagger/OpenAPI",
-        "Gestion complète des participants et du suivi d'avancement"
-      ],
-      stack: ['Spring Boot','React','PostgreSQL','JWT','OAuth2 Google','Swagger','REST API']
-    },
-    lms: {
-      eyebrow: 'Stage DTAI · Full Stack',
-      title: 'Plateforme LMS',
-      sub: 'Application d\'apprentissage en ligne',
-      desc: "Plateforme LMS développée en stage chez DTAI pour former les utilisateurs de l'application de gestion de la paie CEP. Permet la création et la gestion de modules de formation avec suivi de progression des apprenants.",
-      features: [
-        "Gestion des cours et modules de formation",
-        "Suivi de progression des apprenants",
-        "Intégration de contenu d'apprentissage personnalisé",
-        "Interface utilisateur intuitive avec Angular"
-      ],
-      stack: ['Angular','Spring Boot','MySQL','REST API']
-    },
-    contacts: {
-      eyebrow: 'Licence DAR · Full Stack',
-      title: 'Gestion de Contacts',
-      sub: 'Application CRUD avec API REST',
-      desc: "Application full stack de gestion des contacts clients avec une API REST sécurisée. Interface Angular connectée à un backend Laravel, avec tests complets des endpoints via Postman.",
-      features: [
-        "CRUD complet sur les contacts clients",
-        "API REST sécurisée avec Laravel",
-        "Interface Angular réactive",
-        "Tests d'API avec Postman"
-      ],
-      stack: ['Angular','Laravel','PHP','MySQL','Postman','REST API']
-    },
-    gym: {
-      eyebrow: 'Licence DAR · Desktop',
-      title: 'Gestion de Salle de Sport',
-      sub: 'Application desktop en architecture MVC',
-      desc: "Application desktop développée avec JavaFX en architecture MVC pour la gestion complète d'une salle de sport. Permet la gestion des abonnements, des adhérents et des paiements.",
-      features: [
-        "Gestion des abonnements et renouvellements",
-        "Gestion des adhérents et de leurs profils",
-        "Suivi des paiements",
-        "Interface graphique JavaFX",
-        "Architecture MVC rigoureuse"
-      ],
-      stack: ['Java','JavaFX','MySQL','MVC']
-    },
-    bank: {
-      eyebrow: 'Licence DAR · POO C++',
-      title: 'Simulation Bancaire C++',
-      sub: 'Application console orientée objet',
-      desc: "Application console simulant les opérations bancaires de base. Projet axé sur la maîtrise de la programmation orientée objet en C++ avec une gestion rigoureuse de la mémoire et des structures de données.",
-      features: [
-        "Création et gestion de comptes bancaires",
-        "Opérations de dépôt et retrait",
-        "Transferts entre comptes",
-        "Gestion rigoureuse de la mémoire",
-        "Structures de données optimisées"
-      ],
-      stack: ['C++','POO','Gestion mémoire']
-    }
-  };
+// ── STATE ──
+let currentView = 'home';
+let carouselIndex = 0;
+let carouselImages = [];
 
-  let previousPage = 'home';
+// ── INIT ──
+function init() {
+  // Nav logo
+  document.getElementById('nav-logo').textContent = ME.initiales;
+  document.getElementById('nav-logo').onclick = () => goTo('home');
 
-  function showPage(name) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById('page-' + name);
-    if (target) target.classList.add('active');
+  // Hero
+  document.getElementById('hero-prenom').textContent = ME.prenom;
+  document.getElementById('hero-nom').textContent = ME.nom;
+  document.getElementById('hero-titre').textContent = ME.titre;
 
-    const backBtn = document.getElementById('nav-back-btn');
-    const mainLinks = document.getElementById('nav-main-links');
+  // Footer
+  document.getElementById('footer-copy').textContent = `© 2025 ${ME.prenom} ${ME.nom} — Tous droits réservés`;
 
-    if (name === 'home') {
-      backBtn.style.display = 'none';
-      mainLinks.style.display = 'flex';
-    } else {
-      backBtn.style.display = 'flex';
-      mainLinks.style.display = 'none';
-      previousPage = name;
-    }
+  // Projets lists
+  renderProjectsList('home-projects-list');
+  renderProjectsList('projets-list');
 
-    window.scrollTo(0, 0);
+  // Skills
+  renderSkills();
+
+  // Parcours
+  renderParcours();
+
+  // Contact
+  renderContact();
+}
+
+// ── NAVIGATION ──
+function goTo(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  currentView = view;
+  window.scrollTo(0, 0);
+
+  const navBack = document.getElementById('nav-back');
+  const navMain = document.getElementById('nav-main');
+  if (view === 'project') {
+    navBack.style.display = 'block';
+    navMain.style.display = 'none';
+  } else {
+    navBack.style.display = 'none';
+    navMain.style.display = 'flex';
+  }
+}
+
+function goBack() {
+  goTo('projets');
+}
+
+// ── PROJETS LIST ──
+function renderProjectsList(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = PROJETS.map(p => `
+    <div class="project-row" onclick="showProject('${p.id}')">
+      <div class="project-row-left">
+        <div class="project-row-head">
+          <span class="project-row-title">${p.titre}</span>
+          ${p.badge ? `<span class="project-badge">${p.badge}</span>` : ''}
+        </div>
+        <p class="project-row-desc">${p.descCourte}</p>
+        <div class="project-row-stack">${p.stack.map(s => `<span>${s}</span>`).join('')}</div>
+      </div>
+      <span class="project-arrow">→</span>
+    </div>
+  `).join('');
+}
+
+// ── PROJET DÉTAIL ──
+function showProject(id) {
+  const p = PROJETS.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('det-titre').textContent = p.titre;
+  const badge = document.getElementById('det-badge');
+  if (p.badge) { badge.textContent = p.badge; badge.style.display = 'inline'; }
+  else badge.style.display = 'none';
+  document.getElementById('det-type').textContent = p.type;
+  document.getElementById('det-apropos').textContent = p.apropos;
+  document.getElementById('det-features').innerHTML = p.fonctionnalites
+    .map(f => `<li><span class="feat-dash">—</span><span>${f}</span></li>`).join('');
+  document.getElementById('det-stack').innerHTML = p.stack
+    .map(s => `<span class="detail-stack-pill">${s}</span>`).join('');
+  document.getElementById('det-links').innerHTML = `
+    <a class="detail-link" href="${p.github}" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      Code source
+    </a>`;
+
+  // Carrousel
+  carouselImages = p.images && p.images.length > 0 ? p.images : [];
+  carouselIndex = 0;
+  renderCarousel();
+
+  goTo('project');
+}
+
+function renderCarousel() {
+  const track = document.getElementById('carousel-track');
+  const dots = document.getElementById('carousel-dots');
+  const counter = document.getElementById('carousel-counter');
+
+  if (carouselImages.length === 0) {
+    track.innerHTML = `
+      <div class="carousel-slide">
+        <div class="carousel-slide-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Captures d'écran à venir</span>
+        </div>
+      </div>`;
+    dots.innerHTML = '';
+    counter.textContent = '';
+    document.querySelector('.carousel-btn-prev').style.display = 'none';
+    document.querySelector('.carousel-btn-next').style.display = 'none';
+    return;
   }
 
-  function goBack() {
-    if (document.getElementById('page-project').classList.contains('active')) {
-      showPage('projets');
-    } else {
-      showPage('home');
-    }
-  }
+  document.querySelector('.carousel-btn-prev').style.display = 'flex';
+  document.querySelector('.carousel-btn-next').style.display = 'flex';
 
-  function showProject(key) {
-    const p = projects[key];
-    if (!p) return;
+  track.innerHTML = carouselImages.map(src =>
+    `<div class="carousel-slide"><img src="${src}" alt="Screenshot"/></div>`
+  ).join('');
 
-    document.getElementById('detail-eyebrow').textContent = p.eyebrow;
-    document.getElementById('detail-title').textContent = p.title;
-    document.getElementById('detail-sub').textContent = p.sub;
-    document.getElementById('detail-desc').textContent = p.desc;
-    document.getElementById('detail-mockup-label').textContent = p.title + ' — Aperçu';
+  dots.innerHTML = carouselImages.map((_, i) =>
+    `<div class="cdot ${i === 0 ? 'active' : ''}" onclick="carouselGoto(${i})"></div>`
+  ).join('');
 
-    const feat = document.getElementById('detail-features');
-    feat.innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
+  updateCarousel();
+}
 
-    const stack = document.getElementById('detail-stack');
-    stack.innerHTML = p.stack.map(s => `<span class="detail-stack-pill">${s}</span>`).join('');
+function updateCarousel() {
+  document.getElementById('carousel-track').style.transform = `translateX(-${carouselIndex * 100}%)`;
+  document.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('active', i === carouselIndex));
+  document.getElementById('carousel-counter').textContent =
+    carouselImages.length > 0 ? `${carouselIndex + 1} / ${carouselImages.length}` : '';
+}
 
-    showPage('project');
-  }
+function carouselPrev() {
+  carouselIndex = (carouselIndex - 1 + carouselImages.length) % carouselImages.length;
+  updateCarousel();
+}
 
-  // Init
-  showPage('home');
+function carouselNext() {
+  carouselIndex = (carouselIndex + 1) % carouselImages.length;
+  updateCarousel();
+}
+
+function carouselGoto(i) {
+  carouselIndex = i;
+  updateCarousel();
+}
+
+// ── SKILLS ──
+function renderSkills() {
+  document.getElementById('skills-table').innerHTML = COMPETENCES.map(c => `
+    <tr>
+      <td>${c.cat}</td>
+      <td>${c.items.map(i => `<span class="skill-pill">${i}</span>`).join('')}</td>
+    </tr>`).join('');
+}
+
+// ── PARCOURS ──
+function renderParcours() {
+  document.getElementById('exp-list').innerHTML = EXPERIENCES.map(e => `
+    <div class="parcours-item">
+      <div>
+        <div class="parcours-date">${e.date}</div>
+        <div class="parcours-org">${e.org}</div>
+      </div>
+      <div>
+        <div class="parcours-title">${e.titre}</div>
+        <p class="parcours-desc">${e.desc}</p>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('formation-list').innerHTML = FORMATIONS.map(f => `
+    <div class="parcours-item">
+      <div>
+        <div class="parcours-date">${f.date}</div>
+        <div class="parcours-org">${f.org}</div>
+      </div>
+      <div>
+        <div class="parcours-title">${f.titre}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── CONTACT ──
+function renderContact() {
+  document.getElementById('contact-items').innerHTML = `
+    <a class="contact-item" href="mailto:${ME.email}">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      ${ME.email}
+    </a>
+    <a class="contact-item" href="tel:${ME.telephone}">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      ${ME.telephone}
+    </a>
+    <a class="contact-item" href="${ME.githubUrl}" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      ${ME.github}
+    </a>
+    <a class="contact-item" href="${ME.linkedinUrl}" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      ${ME.linkedin}
+    </a>`;
+
+  document.getElementById('contact-footer').textContent =
+    `© 2025 ${ME.prenom} ${ME.nom} — Tous droits réservés`;
+}
+
+// ── LANCEMENT ──
+init();
 </script>
 </body>
 </html>
